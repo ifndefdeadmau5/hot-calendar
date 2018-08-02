@@ -35,14 +35,10 @@ class App extends Component {
     const result = await fetchWeather();
     const temp = result.list.reduce((acc, cur) => {
       const date = cur.dt_txt.split(' ')[0];
-      // console.log(acc)
-      // console.log(cur.dt_txt);
-      // console.log(acc[cur.dt_txt]);
       if(!acc[date]) acc[date] = [];
       acc[date] = [...acc[date], cur];
       return acc;
     }, {});
-    console.log(temp);
     const list = Object.keys(temp).map(key => (
       [...temp[key]]
     ));
