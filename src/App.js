@@ -70,6 +70,7 @@ class App extends Component {
                  <Item
                  temperature={temp}
                  time={dt_txt}
+                 weatherId={weather[0].id}
                >
                  {weather[0].description}
                </Item>
