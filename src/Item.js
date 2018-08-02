@@ -4,16 +4,23 @@ import moment from 'moment';
 import Typography from '@material-ui/core/Typography';
 import { cyan } from '@material-ui/core/colors';
 import styled from 'react-emotion';
-import Skycons from 'react-skycons'
+import Skycons from 'react-skycons';
 import getIcon from './utils/getIcon.js';
 
+const White = styled(Typography)(
+  {
+    color: 'white',
+  }
+);
 const Root = styled('div')(
   {
+    '& > p': {
+      color: 'white',
+    },
     padding: '10px 20px 10px 20px',
     flexDirection: 'column',
     alignItems: 'center',
     display: 'flex',
-    border: `1px solid ${cyan[300]}`,
   }
 );
 
@@ -31,19 +38,21 @@ class Item extends Component {
 
   render() {
     const { time, temperature, children, weatherId } = this.props;
-    console.log(time);
+
     return (
       <Root>
-        <Typography>
+        <White>
           {moment.utc(time).format('ddd, hA')}
-        </Typography>
-        <Typography>
-          <b>{temperature}</b>
-        </Typography>
-        {children}
+        </White>
+        <White>
+          <b>{temperature}</b> °C
+        </White>
+        <White>
+          {children}
+        </White>
         <Skycons
-          style={{ width: 114, height: 56 }}
-          color='black'
+          style={{ marginTop: 16, width: 114, height: 56 }}
+          color='white'
           icon={getIcon(weatherId)}
         />
       </Root>
