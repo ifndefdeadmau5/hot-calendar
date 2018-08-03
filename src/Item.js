@@ -27,8 +27,8 @@ const Root = styled('div')(
 class Item extends Component {
   static propTypes = {
     children: PropTypes.node,
-    temperature: PropTypes.number,
-    time: PropTypes.number,
+    temperature: PropTypes.string,
+    time: PropTypes.string,
     weatherId: PropTypes.string,
   }
 
@@ -42,7 +42,7 @@ class Item extends Component {
     return (
       <Root>
         <White>
-          {moment.utc(time).format('ddd, hA')}
+          {time}
         </White>
         <White style={{ fontSize: 20 }}>
           <b>{temperature}</b> °C
@@ -50,11 +50,11 @@ class Item extends Component {
         <White>
           {children}
         </White>
-        <Skycons
+        {weatherId && <Skycons
           style={{ marginTop: 16, width: 114, height: 56 }}
           color='white'
           icon={getIcon(weatherId)}
-        />
+        />}
       </Root>
     )
   }
