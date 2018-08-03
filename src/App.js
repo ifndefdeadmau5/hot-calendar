@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import styled from 'react-emotion';
+import SwipeableViews from 'react-swipeable-views';
+import max from 'lodash/max';
+import min from 'lodash/min';
 import Item from './Item.js';
 import { fetchWeather } from './utils/api';
 import logo from './logo.svg';
@@ -47,11 +50,27 @@ class App extends Component {
       acc[date] = [...acc[date], cur];
       return acc;
     }, {});
+    console.log('list');
+    console.log(temp);
+    const temp2 = Object.keys(temp).reduce((acc, cur) => {
+      const tempList = temp[cur].map(({ main }) => main.temp);
+      temp[cur] = {
+        array: temp[cur],
+        primary: {
+          min: min(tempList),
+          max: max(tempList),
+        },
+      }
+    }, {});
+    console.log(temp);
     const list = Object.keys(temp).map(key => (
-      [...temp[key]]
+      [...temp[key].array]
     ));
 
-    result.list = list;
+    console.log('list');
+    console.log(list);
+
+    result.list = temp;
     return result;
   }
 
@@ -71,6 +90,21 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <H1 color="white">This is {city.name}.</H1>
         </header>
+        <Container>
+          {Object.keys(list).map((key) => (
+            <Row>
+              <span>max: {list[key].primary.max}</span>
+              <span>max: {list[key].primary.min}</span>
+              {list[key].array.map(({ main: { temp }, weather, dt_txt }) => (
+                <Item
+                  temperature={temp}
+                  time={dt_txt}
+                  weatherId={weather[0].id}
+                />
+              ))}
+            </Row>
+          ))}
+        </Container>
         <Container>
           {list.map((subList) => (
             <Row>

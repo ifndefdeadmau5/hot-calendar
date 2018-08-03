@@ -44,7 +44,7 @@ class Item extends Component {
         <White>
           {moment.utc(time).format('ddd, hA')}
         </White>
-        <White>
+        <White style={{ fontSize: 20 }}>
           <b>{temperature}</b> °C
         </White>
         <White>
